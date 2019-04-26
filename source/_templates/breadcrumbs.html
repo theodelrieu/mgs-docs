@@ -1,0 +1,15 @@
+{% extends "!breadcrumbs.html" %}
+
+{# avoid repeating qualified names in the nav bar #}
+{% block breadcrumbs %}
+  <li><a href="{{ pathto(master_doc) }}">{{ _('Docs') }}</a> &raquo;</li>
+    {% for doc in parents %}
+      <li><a href="{{ doc.link|e }}">{{ doc.title }}</a> &raquo;</li>
+    {% endfor %}
+  {% set parts = title.split("::") %}
+  {% if parts|length > 2 %}
+    <li>{{ parts[-1] }}</li>
+  {% else %}
+    <li>{{ title }}</li>
+  {% endif %}
+{% endblock %}
