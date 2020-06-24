@@ -1,0 +1,20 @@
+name: Docs check
+
+on: 
+- pull_request
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - uses: Gr1N/setup-poetry@v2
+        with:
+          poetry-version: 1.0.5
+      - name: Build doc
+        run: |
+          poetry install
+          poetry run make html
