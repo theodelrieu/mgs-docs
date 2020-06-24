@@ -193,7 +193,7 @@
 
 <span class="nb">list</span><span class="p">(</span><span class="s">APPEND</span> <span class="s">CMAKE_PREFIX_PATH</span> <span class="s2">&quot;&lt;path/to/mgs&gt;&quot;</span><span class="p">)</span>
 
-<span class="nb">find_package</span><span class="p">(</span><span class="s">mgs</span> <span class="s">REQUIRED</span> <span class="s">COMPONENTS</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">mgs</span> <span class="s">REQUIRED</span> <span class="s">COMPONENTS</span> <span class="s">base64</span> <span class="s">base64url</span><span class="p">)</span>
 
 <span class="nb">add_executable</span><span class="p">(</span><span class="s">example</span> <span class="s">main.cpp</span><span class="p">)</span>
 <span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">example</span> <span class="s">mgs::base64</span> <span class="s">mgs::base64url</span><span class="p">)</span>

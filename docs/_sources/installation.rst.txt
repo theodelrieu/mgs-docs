@@ -38,7 +38,7 @@ You can also use *CMake* components:
 
    list(APPEND CMAKE_PREFIX_PATH "<path/to/mgs>")
 
-   find_package(mgs REQUIRED COMPONENTS)
+   find_package(mgs REQUIRED COMPONENTS base64 base64url)
 
    add_executable(example main.cpp)
    target_link_libraries(example mgs::base64 mgs::base64url)
