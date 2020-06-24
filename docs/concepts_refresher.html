@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Concepts refresher &mdash; mgs 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reference" href="reference/reference.html" />
+    <link rel="prev" title="Write a codec from scratch" href="wyoc/from_scratch.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> mgs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wyoc.html">Write your own Codec</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Concepts Refresher</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#concept-definition-syntax">Concept definition syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#concept-emulation">Concept emulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mgs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+  <li><a href="index.html">Docs</a> &raquo;</li>
+    
+  
+  
+    <li>Concepts refresher</li>
+  
+
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/concepts_refresher.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="concepts-refresher">
+<h1>Concepts refresher<a class="headerlink" href="#concepts-refresher" title="Permalink to this headline">¶</a></h1>
+<p>This section briefly introduces C++ concepts.</p>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>Concepts help constraining generic code. Taking the the following code:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">add_numbers</span><span class="p">(</span><span class="n">T</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">T</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">lhs</span> <span class="o">+</span> <span class="n">rhs</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It will work with numbers but nothing prevents passing <a class="reference external" href="https://en.cppreference.com/w/cpp/string/basic_string">std::string</a>, which seems odd for an <code class="docutils literal notranslate"><span class="pre">add_numbers</span></code> function.</p>
+<p>Let’s constrain <code class="docutils literal notranslate"><span class="pre">T</span></code> to only accept integral types. We will use the <a class="reference external" href="https://en.cppreference.com/w/cpp/concepts/integral">std::integral</a> concept for that matter.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">integral</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">add_numbers</span><span class="p">(</span><span class="n">T</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">T</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">lhs</span> <span class="o">+</span> <span class="n">rhs</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">add_numbers</span></code> with <a class="reference external" href="https://en.cppreference.com/w/cpp/string/basic_string">std::string</a> will now fail to compile.</p>
+</div>
+<div class="section" id="concept-definition-syntax">
+<h2>Concept definition syntax<a class="headerlink" href="#concept-definition-syntax" title="Permalink to this headline">¶</a></h2>
+<p>Here is a toy concept definition, which will be useful to read and understand more advanced concepts:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">foo</span> <span class="o">=</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">default_constructible</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span>                     <span class="c1">// 1.</span>
+  <span class="k">requires</span><span class="p">(</span><span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>                           <span class="c1">// 2.</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">signed_integral</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">::</span><span class="n">difference_type</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// 3.</span>
+    <span class="p">{</span> <span class="n">value</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">same_as</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="p">;</span>     <span class="c1">// 4.</span>
+  <span class="p">};</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code> must model <a class="reference external" href="https://en.cppreference.com/w/cpp/concepts/default_constructible">std::default_constructible</a>.</p></li>
+<li><p><a class="reference external" href="https://en.cppreference.com/w/cpp/keyword/requires">requires</a> clause allows using values of any type (here <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">const&amp;</span></code>) to ensure the validity of expressions composing it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T::difference_type</span></code> must exist, and model <a class="reference external" href="https://en.cppreference.com/w/cpp/concepts/signed_integral">std::signed_integral</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value.size()</span></code> must be a valid expression, and return <strong>exactly</strong> <a class="reference external" href="https://en.cppreference.com/w/cpp/types/size_t">std::size_t</a>.</p></li>
+</ol>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>When a concept is specified after <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code>, its first template parameter is omitted. It will be set automatically by the compiler.</p>
+<p><code class="docutils literal notranslate"><span class="pre">4.</span></code> could have been written as <code class="docutils literal notranslate"><span class="pre">std::same_as&lt;decltype((value.size())),</span> <span class="pre">std::size_t&gt;</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To learn more about Concepts, take a look <a class="reference external" href="https://en.cppreference.com/w/cpp/language/constraints">here</a>.</p>
+</div>
+</div>
+<div class="section" id="concept-emulation">
+<h2>Concept emulation<a class="headerlink" href="#concept-emulation" title="Permalink to this headline">¶</a></h2>
+<p>Concepts are a C++20 feature, and thus are not used in the code.</p>
+<p>To emulate them, <em>mgs</em> defines for each concept:</p>
+<ul class="simple">
+<li><p>a type trait</p></li>
+<li><p>a variable template</p></li>
+<li><p>a type alias</p></li>
+</ul>
+<p>Taking back the <em>foo</em> toy concept from above:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">add_numbers</span><span class="p">(</span><span class="n">T</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">T</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">lhs</span> <span class="o">+</span> <span class="n">rhs</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">mgs</span> <span class="p">{</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">is_foo</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>
+<span class="k">constexpr</span> <span class="k">auto</span> <span class="n">is_foo_v</span> <span class="o">=</span> <span class="n">is_foo</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span>
+          <span class="k">typename</span> <span class="n">U</span><span class="p">,</span>
+          <span class="k">typename</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">is_foo_v</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;&gt;&gt;</span>
+<span class="k">using</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">T</span><span class="p">;</span>
+
+<span class="p">}</span> <span class="c1">// namespace mgs</span>
+</pre></div>
+</div>
+<p>To know more about concept emulation and how to use it, take a look <a class="reference internal" href="usage/advanced.html#emulated-concepts"><span class="std std-ref">here</span></a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Every concept emulated by mgs tries to be as SFINAE-friendly as possible. i.e. passing <code class="docutils literal notranslate"><span class="pre">void</span></code> to most traits will compile, whereas it would trigger undefined behavior for their <code class="docutils literal notranslate"><span class="pre">std</span></code> counterparts (which often means compiler errors).</p>
+<p>The rationale behind this difference is that the need to short-circuit SFINAE conditions (to handle types like <code class="docutils literal notranslate"><span class="pre">void</span></code>) in generic context is a pain. And my feeling is that statements like <code class="docutils literal notranslate"><span class="pre">std::is_base_of_v&lt;std::string,</span> <span class="pre">void&gt;</span></code> should return <code class="docutils literal notranslate"><span class="pre">false</span></code> instead of yielding a compiler error.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference/reference.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wyoc/from_scratch.html" class="btn btn-neutral float-left" title="Write a codec from scratch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Théo DELRIEU
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

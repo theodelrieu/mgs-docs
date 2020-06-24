@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Intermediate usage &mdash; mgs 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced" href="advanced.html" />
+    <link rel="prev" title="Basic usage" href="basic.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mgs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="basic.html">Basic</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Intermediate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#encoders-and-decoders">Encoders and decoders</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#encoders-as-input-ranges">Encoders as input ranges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#when-to-use-encoders">When to use encoders?</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#adding-support-for-user-defined-types">Adding support for user-defined types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limiting-memory-usage">Limiting memory usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../wyoc.html">Write your own Codec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts_refresher.html">Concepts Refresher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mgs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+  <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../usage.html">Usage</a> &raquo;</li>
+    
+  
+  
+    <li>Intermediate usage</li>
+  
+
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/usage/intermediate.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="intermediate-usage">
+<h1>Intermediate usage<a class="headerlink" href="#intermediate-usage" title="Permalink to this headline">¶</a></h1>
+<p>This section introduces encoders and decoders.</p>
+<div class="section" id="encoders-and-decoders">
+<h2>Encoders and decoders<a class="headerlink" href="#encoders-and-decoders" title="Permalink to this headline">¶</a></h2>
+<p>Every codec is built on top of an encoder and a decoder.</p>
+<p>They both model the <a class="reference internal" href="../reference/codecs/concepts/input_source.html#input-source"><span class="std std-ref">codecs::input_source</span></a> concept and thus allow lazy encoding/decoding.</p>
+<p>To create them, use the codec traits’ <code class="docutils literal notranslate"><span class="pre">make_encoder</span></code>/<code class="docutils literal notranslate"><span class="pre">make_decoder</span></code> static member functions.
+Then, use the <code class="docutils literal notranslate"><span class="pre">read</span></code> member function to read sequences of elements.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/base64.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span> <span class="n">decoded_string</span><span class="p">(</span><span class="s">&quot;decoded&quot;</span><span class="p">);</span>
+  <span class="c1">// retrieves the exact encoded size</span>
+  <span class="k">auto</span> <span class="k">const</span> <span class="n">encoded_size</span> <span class="o">=</span> <span class="n">base64</span><span class="o">::</span><span class="n">encoded_size</span><span class="p">(</span><span class="n">decoded_string</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">encoded_string</span><span class="p">(</span><span class="n">encoded_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">base64</span><span class="o">::</span><span class="n">make_encoder</span><span class="p">(</span><span class="n">decoded_string</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">size_to_read</span> <span class="o">=</span> <span class="n">encoded_size</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">read_result</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">encoded_string</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">size_to_read</span><span class="p">);</span>
+
+  <span class="k">while</span> <span class="p">(</span><span class="n">read_result</span><span class="p">.</span><span class="n">second</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">size_to_read</span> <span class="o">-=</span> <span class="n">read_result</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+    <span class="n">read_result</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">read_result</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">size_to_read</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the above example, <code class="docutils literal notranslate"><span class="pre">read</span></code> will attempt to read <code class="docutils literal notranslate"><span class="pre">size_to_read</span></code> elements into an iterator.</p>
+<p>However, implementation is allowed to read less than <code class="docutils literal notranslate"><span class="pre">size_to_read</span></code>, which means subsequent calls to <code class="docutils literal notranslate"><span class="pre">read</span></code> might be necessary to read all data.</p>
+<p>For that matter, <code class="docutils literal notranslate"><span class="pre">read</span></code> returns a pair containing:</p>
+<ul class="simple">
+<li><p>the iterator pointing after the last written element</p></li>
+<li><p>the number of elements written, <code class="docutils literal notranslate"><span class="pre">0</span></code> being EOF</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Encoders and decoders are stateful objects designed for one-time use, be careful to not reuse them!</p>
+</div>
+<div class="section" id="encoders-as-input-ranges">
+<h3>Encoders as input ranges<a class="headerlink" href="#encoders-as-input-ranges" title="Permalink to this headline">¶</a></h3>
+<p><em>mgs</em> provides a way to wrap a <a class="reference internal" href="../reference/codecs/concepts/input_source.html#input-source"><span class="std std-ref">codecs::input_source</span></a> into a <a class="reference internal" href="../reference/meta/concepts/input_range.html#input-range"><span class="std std-ref">meta::input_range</span></a>.</p>
+<p>Though less efficient, this reduces the amount of code needed to read from a <a class="reference internal" href="../reference/codecs/concepts/input_source.html#input-source"><span class="std std-ref">codecs::input_source</span></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/base64.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_input_range.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">base64</span><span class="o">::</span><span class="n">make_encoder</span><span class="p">(</span><span class="s">&quot;decoded&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">encoding_range</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">::</span><span class="n">make_input_range</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">encoder</span><span class="p">));</span>
+
+  <span class="c1">// STL algorithms can be used with input ranges&#39; iterators</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">encoding_range</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">encoding_range</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">ostreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>While more verbose, using <code class="docutils literal notranslate"><span class="pre">read</span></code> is usually faster than using iterators.</p>
+</div>
+</div>
+</div>
+<div class="section" id="when-to-use-encoders">
+<h2>When to use encoders?<a class="headerlink" href="#when-to-use-encoders" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="adding-support-for-user-defined-types">
+<span id="id1"></span><h3>Adding support for user-defined types<a class="headerlink" href="#adding-support-for-user-defined-types" title="Permalink to this headline">¶</a></h3>
+<p>Although <em>mgs</em> supports quite a few return types, you might use one in your code that is not supported by default.</p>
+<p>Customizing the libary for that type requires using encoders/decoders along with the <a class="reference internal" href="../reference/codecs/types/output_traits.html#output-traits"><span class="std std-ref">codecs::output_traits</span></a> customization point.</p>
+<p>As an example, here is the code needed for <a class="reference external" href="http://doc.qt.io/qt-5/qlinkedlist.html">QLinkedList</a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/output_traits_fwd.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_input_range.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/base64.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;QLinkedList&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iterator&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">mgs</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">codecs</span> <span class="p">{</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">CharT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">output_traits</span><span class="o">&lt;</span><span class="n">QLinkedList</span><span class="o">&lt;</span><span class="n">CharT</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+
+  <span class="c1">// In this case, InputSource is either an encoder or a decoder</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">InputSource</span><span class="o">&gt;</span>
+  <span class="k">static</span> <span class="n">QLinkedList</span><span class="o">&lt;</span><span class="n">CharT</span><span class="o">&gt;</span> <span class="n">create</span><span class="p">(</span><span class="n">InputSource</span> <span class="n">source</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">QLinkedList</span><span class="o">&lt;</span><span class="n">CharT</span><span class="o">&gt;</span> <span class="n">list</span><span class="p">;</span>
+    <span class="c1">// not the most efficient way</span>
+    <span class="k">auto</span> <span class="n">range</span> <span class="o">=</span> <span class="n">make_input_range</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">range</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">range</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
+    <span class="k">return</span> <span class="n">list</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="p">}</span> <span class="c1">// namespace codecs</span>
+<span class="p">}</span> <span class="c1">// namespace mgs</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">encoded_qlist</span> <span class="o">=</span> <span class="n">mgs</span><span class="o">::</span><span class="n">base64</span><span class="o">::</span><span class="n">encode</span><span class="o">&lt;</span><span class="n">QLinkedList</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="../reference/codecs/types/output_traits.html#output-traits"><span class="std std-ref">codecs::output_traits</span></a> has a second template parameter, defaulted to <code class="docutils literal notranslate"><span class="pre">void</span></code>, which can be used to perform SFINAE checks.</p>
+</div>
+</div>
+<div class="section" id="limiting-memory-usage">
+<h3>Limiting memory usage<a class="headerlink" href="#limiting-memory-usage" title="Permalink to this headline">¶</a></h3>
+<p>When dealing with huge volumes of data, memory consumption can become a problem.</p>
+<p>Using the API shown in the <a class="reference internal" href="basic.html#usage-basic"><span class="std std-ref">basic section</span></a> demonstrates it well:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/base64.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Could be a few TB...</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">enormous_file</span><span class="p">(</span><span class="s">&quot;TODO.txt&quot;</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">istreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">begin</span><span class="p">(</span><span class="n">enormous_file</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">istreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">end</span><span class="p">;</span>
+
+  <span class="c1">// oops, likely to throw</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">content</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+  <span class="c1">// oops, even more likely to throw</span>
+  <span class="k">auto</span> <span class="n">encoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">::</span><span class="n">encode</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+
+  <span class="c1">// very unlikely to be reached</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">ofs</span><span class="p">(</span><span class="s">&quot;TODO.b64&quot;</span><span class="p">);</span>
+  <span class="n">ofs</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">encoded</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">encoded</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this case, <a class="reference external" href="https://en.cppreference.com/w/cpp/memory/new/bad_alloc">std::bad_alloc</a> will likely be thrown when constructing <code class="docutils literal notranslate"><span class="pre">content</span></code> or <code class="docutils literal notranslate"><span class="pre">encoded</span></code>.</p>
+<p>Here is how to handle it properly:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/base64.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_input_range.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">enormous_file</span><span class="p">(</span><span class="s">&quot;TODO.txt&quot;</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">istreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">begin</span><span class="p">(</span><span class="n">enormous_file</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">istreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">end</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">base64</span><span class="o">::</span><span class="n">make_encoder</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">encoding_range</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">::</span><span class="n">make_input_range</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">encoder</span><span class="p">));</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">ofs</span><span class="p">(</span><span class="s">&quot;TODO.b64&quot;</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">encoding_range</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">encoding_range</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">ostreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ofs</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="advanced.html" class="btn btn-neutral float-right" title="Advanced" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="basic.html" class="btn btn-neutral float-left" title="Basic usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Théo DELRIEU
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

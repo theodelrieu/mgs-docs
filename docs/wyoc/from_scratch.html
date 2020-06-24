@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Write a codec from scratch &mdash; mgs 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Concepts refresher" href="../concepts_refresher.html" />
+    <link rel="prev" title="Write a BaseN codec" href="base_n.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mgs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../wyoc.html">Write your own Codec</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="base_n.html">BaseN codec</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">From scratch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#write-an-input-source">Write an input source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-an-input-range-optional">Write an input range (optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-the-codec-traits">Define the codec traits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-your-codec">Use your codec</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts_refresher.html">Concepts Refresher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mgs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+  <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../wyoc.html">Write your own Codec</a> &raquo;</li>
+    
+  
+  
+    <li>Write a codec from scratch</li>
+  
+
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/wyoc/from_scratch.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="write-a-codec-from-scratch">
+<h1>Write a codec from scratch<a class="headerlink" href="#write-a-codec-from-scratch" title="Permalink to this headline">¶</a></h1>
+<p>This section introduces building blocks that can be used to create codecs from scratch.</p>
+<div class="section" id="write-an-input-source">
+<h2>Write an input source<a class="headerlink" href="#write-an-input-source" title="Permalink to this headline">¶</a></h2>
+<p>Input sources are <em>mgs</em>’ lowest level constructs. Their role is to provide sequential reads of arbitrary input.</p>
+<p>They must model <a class="reference internal" href="../reference/codecs/concepts/input_source.html#input-source"><span class="std std-ref">codecs::input_source</span></a>.</p>
+<p>Let’s write a simple one, that will only work with <code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">const*</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/ssize_t.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">noop_encoder</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="k">using</span> <span class="n">element_type</span> <span class="o">=</span> <span class="kt">char</span><span class="p">;</span>
+
+  <span class="n">noop_encoder</span><span class="p">(</span><span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">begin</span><span class="p">,</span> <span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">end</span><span class="p">)</span> <span class="o">:</span> <span class="n">_current</span><span class="p">(</span><span class="n">begin</span><span class="p">),</span> <span class="n">_end</span><span class="p">(</span><span class="n">end</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">O</span><span class="o">&gt;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">O</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">read</span><span class="p">(</span><span class="n">O</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="k">const</span> <span class="n">to_read</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">distance</span><span class="p">(</span><span class="n">_current</span><span class="p">,</span> <span class="n">_end</span><span class="p">));</span>
+    <span class="n">dst</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">copy_n</span><span class="p">(</span><span class="n">_current</span><span class="p">,</span> <span class="n">to_read</span><span class="p">,</span> <span class="n">dst</span><span class="p">);</span>
+    <span class="n">_current</span> <span class="o">+=</span> <span class="n">to_read</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">dst</span><span class="p">,</span> <span class="n">to_read</span><span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Optional, but required to model codecs::sized_input_source</span>
+  <span class="n">mgs</span><span class="o">::</span><span class="kt">ssize_t</span> <span class="n">max_remaining_size</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_end</span> <span class="o">-</span> <span class="n">_current</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">_current</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">_end</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-an-input-range-optional">
+<h2>Write an input range (optional)<a class="headerlink" href="#write-an-input-range-optional" title="Permalink to this headline">¶</a></h2>
+<p>Input ranges allow iterating over input.</p>
+<p><em>mgs</em> provides a building block to easily create one from an input source:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_input_range.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/ssize_t.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">noop_encoder</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+
+  <span class="k">using</span> <span class="n">noop_encoding_range</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">::</span><span class="n">basic_input_range</span><span class="o">&lt;</span><span class="n">noop_encoder</span><span class="o">&gt;</span><span class="p">;</span>
+
+  <span class="n">noop_encoder</span> <span class="n">encoder</span><span class="p">(</span><span class="n">hello</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">hello</span><span class="p">.</span><span class="n">c_str</span><span class="p">()</span> <span class="o">+</span> <span class="n">hello</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="n">noop_encoding_range</span> <span class="n">encoding_range</span><span class="p">(</span><span class="n">encoder</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello2</span><span class="p">(</span><span class="n">encoding_range</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">encoding_range</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="c1">// &quot;Hello, World!&quot;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hello2</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/codecs/types/basic_input_range.html#basic-input-range"><span class="std std-ref">codecs::basic_input_range</span></a> takes a <a class="reference internal" href="../reference/codecs/concepts/input_source.html#input-source"><span class="std std-ref">codecs::input_source</span></a> and models <a class="reference internal" href="../reference/meta/concepts/input_range.html#input-range"><span class="std std-ref">meta::input_range</span></a>.</p>
+</div>
+<div class="section" id="define-the-codec-traits">
+<h2>Define the codec traits<a class="headerlink" href="#define-the-codec-traits" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have our encoder, we can <strong>almost</strong> create our codec.</p>
+<p>We still have to write a small codec traits type, which will be used by the next building block.</p>
+<p>This type must model <a class="reference internal" href="../reference/codecs/concepts/codec_traits.html#codec-traits"><span class="std std-ref">codecs::codec_traits</span></a> and define:</p>
+<ul class="simple">
+<li><p>default types returned by <strong>encode</strong> and <strong>decode</strong> functions.</p></li>
+<li><p><strong>make_encoder</strong> and <strong>make_decoder</strong> functions, taking a <a class="reference internal" href="../reference/codecs/concepts/input_source.html#input-source"><span class="std std-ref">codecs::input_source</span></a></p></li>
+</ul>
+<p>For simplicity, it will only work with <a class="reference internal" href="../reference/codecs/types/iterator_sentinel_source.html#iterator-sentinel-source"><span class="std std-ref">codecs::iterator_sentinel_source&lt;char const*&gt;</span></a>, which is the most basic <a class="reference internal" href="../reference/codecs/concepts/input_source.html#input-source"><span class="std std-ref">codecs::input_source</span></a> provided by <em>mgs</em> (it just wraps an iterator/sentinel pair).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/iterator_sentinel_source.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">noop_codec_traits</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">default_encoded_output</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">default_decoded_output</span> <span class="o">=</span> <span class="n">default_encoded_output</span><span class="p">;</span>
+
+  <span class="k">static</span> <span class="n">noop_encoder</span> <span class="nf">make_encoder</span><span class="p">(</span>
+      <span class="n">codecs</span><span class="o">::</span><span class="n">iterator_sentinel_source</span><span class="o">&lt;</span><span class="kt">char</span> <span class="k">const</span><span class="o">*&gt;</span> <span class="n">is</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">noop_encoder</span><span class="p">(</span><span class="n">is</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">is</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="n">noop_encoder</span> <span class="nf">make_decoder</span><span class="p">(</span>
+      <span class="n">codecs</span><span class="o">::</span><span class="n">iterator_sentinel_source</span><span class="o">&lt;</span><span class="kt">char</span> <span class="k">const</span><span class="o">*&gt;</span> <span class="n">is</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">noop_encoder</span><span class="p">(</span><span class="n">is</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">is</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-your-codec">
+<h2>Use your codec<a class="headerlink" href="#use-your-codec" title="Permalink to this headline">¶</a></h2>
+<p>Here we are, the last step!</p>
+<p>We will use <a class="reference internal" href="../reference/codecs/types/basic_codec.html#basic-codec"><span class="std std-ref">codecs::basic_codec</span></a>, a helper class that needs a <a class="reference internal" href="../reference/codecs/concepts/codec_traits.html#codec-traits"><span class="std std-ref">codecs::codec_traits</span></a> as its template parameter, and models <a class="reference internal" href="../reference/codecs/concepts/codec.html#codec"><span class="std std-ref">codecs::codec</span></a>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_codec.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="n">noop_codec</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">::</span><span class="n">basic_codec</span><span class="o">&lt;</span><span class="n">noop_codec_traits</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Congratulations, you can now use your no-op codec!</p>
+<p>Here is the full code:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_codec.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_input_range.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/iterator_sentinel_source.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/ssize_t.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">noop_encoder</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="k">using</span> <span class="n">element_type</span> <span class="o">=</span> <span class="kt">char</span><span class="p">;</span>
+
+  <span class="n">noop_encoder</span><span class="p">(</span><span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">begin</span><span class="p">,</span> <span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">end</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">_current</span><span class="p">(</span><span class="n">begin</span><span class="p">),</span> <span class="n">_end</span><span class="p">(</span><span class="n">end</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">O</span><span class="o">&gt;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">O</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">read</span><span class="p">(</span><span class="n">O</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="k">const</span> <span class="n">to_read</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">distance</span><span class="p">(</span><span class="n">_current</span><span class="p">,</span> <span class="n">_end</span><span class="p">));</span>
+    <span class="n">dst</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">copy_n</span><span class="p">(</span><span class="n">_current</span><span class="p">,</span> <span class="n">to_read</span><span class="p">,</span> <span class="n">dst</span><span class="p">);</span>
+    <span class="n">_current</span> <span class="o">+=</span> <span class="n">to_read</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">dst</span><span class="p">,</span> <span class="n">to_read</span><span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Optional, but required to model codecs::sized_input_source</span>
+  <span class="n">mgs</span><span class="o">::</span><span class="kt">ssize_t</span> <span class="n">max_remaining_size</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_end</span> <span class="o">-</span> <span class="n">_current</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">_current</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">_end</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">noop_codec_traits</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">default_encoded_output</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">default_decoded_output</span> <span class="o">=</span> <span class="n">default_encoded_output</span><span class="p">;</span>
+
+  <span class="k">static</span> <span class="n">noop_encoder</span> <span class="nf">make_encoder</span><span class="p">(</span>
+      <span class="n">codecs</span><span class="o">::</span><span class="n">iterator_sentinel_source</span><span class="o">&lt;</span><span class="kt">char</span> <span class="k">const</span><span class="o">*&gt;</span> <span class="n">is</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">noop_encoder</span><span class="p">(</span><span class="n">is</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">is</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="n">noop_encoder</span> <span class="nf">make_decoder</span><span class="p">(</span>
+      <span class="n">codecs</span><span class="o">::</span><span class="n">iterator_sentinel_source</span><span class="o">&lt;</span><span class="kt">char</span> <span class="k">const</span><span class="o">*&gt;</span> <span class="n">is</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">noop_encoder</span><span class="p">(</span><span class="n">is</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">is</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">using</span> <span class="n">noop_codec</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">::</span><span class="n">basic_codec</span><span class="o">&lt;</span><span class="n">noop_codec_traits</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="k">const</span> <span class="n">s</span> <span class="o">=</span> <span class="n">noop_codec</span><span class="o">::</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="k">const</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">noop_codec</span><span class="o">::</span><span class="n">decode</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">&gt;&gt;</span><span class="p">(</span>
+      <span class="n">s</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">s</span><span class="p">.</span><span class="n">c_str</span><span class="p">()</span> <span class="o">+</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../concepts_refresher.html" class="btn btn-neutral float-right" title="Concepts refresher" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="base_n.html" class="btn btn-neutral float-left" title="Write a BaseN codec" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Théo DELRIEU
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meta::constructible_from &mdash; mgs 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="meta::convertible_to" href="convertible_to.html" />
+    <link rel="prev" title="meta::complete_type" href="complete_type.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> mgs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../wyoc.html">Write your own Codec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concepts_refresher.html">Concepts Refresher</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../base64.html">base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base64url.html">base64url, base64url_nopad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base32.html">base32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base32hex.html">base32hex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base16.html">base16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base_n/types/basic_codec.html">base_n::basic_codec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base_n/types/basic_codec_traits.html">base_n::basic_codec_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base_n/types/encode_algorithm.html">base_n::encode_algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base_n/types/decode_algorithm.html">base_n::decode_algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base_n/types/padding_policy.html">base_n::padding_policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base_n/concepts/encoding_traits.html">base_n::encoding_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/types/basic_codec.html">codecs::basic_codec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/types/output_traits.html">codecs::output_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/types/basic_input_range.html">codecs::basic_input_range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/types/iterator_sentinel_source.html">codecs::iterator_sentinel_source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/concepts/byte_type.html">codecs::byte_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/concepts/codec_output.html">codecs::codec_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/concepts/codec_traits.html">codecs::codec_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/concepts/codec.html">codecs::codec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/concepts/input_source.html">codecs::input_source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codecs/concepts/sized_input_source.html">codecs::sized_input_source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/common_reference.html">meta::common_reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/detected.html">meta::is_detected,detected_t,detected_or</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/incrementable_traits.html">meta::incrementable_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iter_concept.html">meta::iter_concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iter_difference_t.html">meta::iter_difference_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iter_reference_t.html">meta::iter_reference_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iter_rvalue_reference_t.html">meta::iter_rvalue_reference_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iter_traits.html">meta::iter_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iter_value_t.html">meta::iter_value_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iterator_t.html">meta::iterator_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/iterator_traits.html">meta::iterator_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/priority_tag.html">meta::priority_tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/range_difference_t.html">meta::range_difference_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/range_reference_t.html">meta::range_reference_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/range_rvalue_reference_t.html">meta::range_rvalue_reference_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/range_value_t.html">meta::range_value_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/readable_traits.html">meta::readable_traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/sentinel_t.html">meta::sentinel_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../types/void_t.html">meta::void_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assignable_from.html">meta::assignable_from</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bidirectional_iterator.html">meta::bidirectional_iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bidirectional_range.html">meta::bidirectional_range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boolean.html">meta::boolean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_range.html">meta::common_range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_reference_with.html">meta::common_reference_with</a></li>
+<li class="toctree-l2"><a class="reference internal" href="complete_type.html">meta::complete_type</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">meta::constructible_from</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#differences-with-the-c-20-version">Differences with the C++20 version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concept-emulation">Concept emulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="convertible_to.html">meta::convertible_to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copy_constructible.html">meta::copy_constructible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copyable.html">meta::copyable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_constructible.html">meta::default_constructible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dereferenceable.html">meta::dereferenceable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derived_from.html">meta::derived_from</a></li>
+<li class="toctree-l2"><a class="reference internal" href="destructible.html">meta::destructible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="equality_comparable.html">meta::equality_comparable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="equality_comparable_with.html">meta::equality_comparable_with</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forward_iterator.html">meta::forward_iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forward_range.html">meta::forward_range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incrementable.html">meta::incrementable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input_iterator.html">meta::input_iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input_range.html">meta::input_range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral.html">meta::integral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input_or_output_iterator.html">meta::input_or_output_iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="movable.html">meta::movable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="move_constructible.html">meta::move_constructible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_iterator.html">meta::output_iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_range.html">meta::output_range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_access_iterator.html">meta::random_access_iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_access_range.html">meta::random_access_range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="range.html">meta::range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readable.html">meta::readable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regular.html">meta::regular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="same_as.html">meta::same_as</a></li>
+<li class="toctree-l2"><a class="reference internal" href="semiregular.html">meta::semiregular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sentinel_for.html">meta::sentinel_for</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signed_integral.html">meta::signed_integral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sized_sentinel_for.html">meta::sized_sentinel_for</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swappable.html">meta::swappable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="totally_ordered.html">meta::totally_ordered</a></li>
+<li class="toctree-l2"><a class="reference internal" href="totally_ordered_with.html">meta::totally_ordered_with</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weakly_equality_comparable_with.html">meta::weakly_equality_comparable_with</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weakly_incrementable.html">meta::weakly_incrementable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writable.html">meta::writable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../errors/types/exception.html">errors::exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../errors/types/decode_error.html">errors::decode_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../errors/types/unexpected_eof.html">errors::unexpected_eof</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../errors/types/invalid_input.html">errors::invalid_input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../config/types/ssize_t.html">mgs::ssize_t</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mgs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+  <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../reference.html">Reference</a> &raquo;</li>
+    
+  
+  
+    <li>meta::constructible_from</li>
+  
+
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/reference/meta/concepts/constructible_from.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="meta-constructible-from">
+<span id="constructible-from"></span><h1>meta::constructible_from<a class="headerlink" href="#meta-constructible-from" title="Permalink to this headline">¶</a></h1>
+<p>Defined in header <code class="docutils literal notranslate"><span class="pre">&lt;mgs/meta/concepts/constructible_from.hpp&gt;</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">constructible_from</span> <span class="o">=</span>
+  <span class="n">meta</span><span class="o">::</span><span class="n">destructible</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">is_constructible_v</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Pre-C++20 implementation of the <a class="reference external" href="https://en.cppreference.com/w/cpp/concepts/constructible_from">std::constructible_from</a> concept.</p>
+<hr class="docutils" />
+<div class="section" id="differences-with-the-c-20-version">
+<h2>Differences with the C++20 version<a class="headerlink" href="#differences-with-the-c-20-version" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Checks template arguments before calling <a class="reference external" href="https://en.cppreference.com/w/cpp/types/is_constructible">std::is_constructible_v</a>, which is not SFINAE-friendly.</p></li>
+</ul>
+</div>
+<div class="section" id="concept-emulation">
+<h2>Concept emulation<a class="headerlink" href="#concept-emulation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">mgs</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">meta</span> <span class="p">{</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">is_constructible_from</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="k">constexpr</span> <span class="k">auto</span> <span class="n">is_constructible_from_v</span> <span class="o">=</span> <span class="n">is_constructible_from</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">;</span>
+
+<span class="p">}</span> <span class="c1">// namespace meta</span>
+<span class="p">}</span> <span class="c1">// namespace mgs</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike other concept emulations, there is no <code class="docutils literal notranslate"><span class="pre">constructible_from</span></code> alias because of the template parameter pack.</p>
+</div>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;mgs/meta/concepts/constructible_from.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="o">::</span><span class="n">meta</span><span class="p">;</span>
+
+<span class="k">static_assert</span><span class="p">(</span><span class="n">is_constructible_from_v</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="k">static_assert</span><span class="p">(</span><span class="n">is_constructible_from_v</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span><span class="o">&amp;&gt;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="k">static_assert</span><span class="p">(</span><span class="n">is_constructible_from_v</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="k">static_assert</span><span class="p">(</span><span class="o">!</span><span class="n">is_constructible_from_v</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="destructible.html#destructible"><span class="std std-ref">meta::destructible</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="convertible_to.html" class="btn btn-neutral float-right" title="meta::convertible_to" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="complete_type.html" class="btn btn-neutral float-left" title="meta::complete_type" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Théo DELRIEU
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
