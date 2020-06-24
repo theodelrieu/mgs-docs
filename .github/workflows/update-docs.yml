@@ -1,0 +1,36 @@
+name: Update github-pages site
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - uses: Gr1N/setup-poetry@v2
+        with:
+          poetry-version: 1.0.5
+      - name: Build doc
+        run: |
+          poetry install
+          poetry run make html
+      - name: Commit documentation changes
+        run: |
+          cp -r _build/html/* docs/
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/
+          git commit -m "Update documentation" -a || true
+          # The above command will fail if no changes were present, so we ignore
+          # that.
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          directory: docs
+          github_token: ${{ secrets.GITHUB_TOKEN }}
