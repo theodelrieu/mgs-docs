@@ -6,7 +6,7 @@ authors = ["Théo DELRIEU <delrieutheo@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.6"
 sphinx = "^2.4.4"
 sphinx_rtd_theme = "^0.4.3"
 
