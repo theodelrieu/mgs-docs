@@ -22,7 +22,7 @@ jobs:
           poetry run make html
       - name: Commit documentation changes
         run: |
-          cp -r _build/html/* docs/
+          cp -r ./build/html/* docs/
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add docs/
