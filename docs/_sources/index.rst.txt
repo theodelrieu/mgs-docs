@@ -22,3 +22,4 @@ Its main design goals are:
    Write your own Codec <wyoc>
    Concepts Refresher <concepts_refresher>
    Reference <reference/reference>
+   changelog
