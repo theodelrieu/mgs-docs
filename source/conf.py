@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'mgs'
-copyright = '2019, Théo DELRIEU'
+copyright = '2020, Théo DELRIEU'
 author = 'Théo DELRIEU'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = '0.1.1'
 
 
 # -- General configuration ---------------------------------------------------
