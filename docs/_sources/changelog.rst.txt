@@ -3,6 +3,11 @@
 Changelog
 =========
 
+0.1.2
+-----
+
+- Fix: Include LICENSE in release artifact
+
 0.1.1
 -----
 
