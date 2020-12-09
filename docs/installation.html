@@ -84,11 +84,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#integration">Integration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cmake">CMake</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conan">Conan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manual">Manual</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#integration">Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cmake">CMake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Manual</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -165,18 +167,31 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="conan">
+<h2>Conan<a class="headerlink" href="#conan" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">mgs</span></code> is available from the <code class="docutils literal notranslate"><span class="pre">conan-center</span></code> remote and can be installed like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conan install mgs/0.1.2@
+</pre></div>
+</div>
+</div>
+<div class="section" id="manual">
+<h2>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h2>
 <p>You can download releases on <a class="reference external" href="https://www.github.com/theodelrieu/mgs/releases">GitHub</a>.</p>
+</div>
+</div>
 <div class="section" id="integration">
-<h2>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">¶</a></h2>
+<h1>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="cmake">
-<h3>CMake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h3>
-<p><em>CMake</em> files are released to ease integration:</p>
+<h2>CMake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h2>
+<p><em>CMake</em> config files are released to ease integration.
+If you used Conan to install <code class="docutils literal notranslate"><span class="pre">mgs</span></code>, you can use the <code class="docutils literal notranslate"><span class="pre">cmake_find_package_multi</span></code> generator for the same results.</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.3</span><span class="p">)</span>
 <span class="nb">project</span><span class="p">(</span><span class="s">example</span><span class="p">)</span>
 
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span> <span class="s">14</span><span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_EXTENSIONS</span> <span class="s">OFF</span><span class="p">)</span>
 
+<span class="c"># not useful if installed with Conan</span>
 <span class="nb">list</span><span class="p">(</span><span class="s">APPEND</span> <span class="s">CMAKE_PREFIX_PATH</span> <span class="s2">&quot;&lt;path/to/mgs&gt;&quot;</span><span class="p">)</span>
 
 <span class="nb">find_package</span><span class="p">(</span><span class="s">mgs</span> <span class="s">REQUIRED</span><span class="p">)</span>
@@ -192,6 +207,7 @@
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span> <span class="s">14</span><span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_EXTENSIONS</span> <span class="s">OFF</span><span class="p">)</span>
 
+<span class="c"># not useful if installed with Conan</span>
 <span class="nb">list</span><span class="p">(</span><span class="s">APPEND</span> <span class="s">CMAKE_PREFIX_PATH</span> <span class="s2">&quot;&lt;path/to/mgs&gt;&quot;</span><span class="p">)</span>
 
 <span class="nb">find_package</span><span class="p">(</span><span class="s">mgs</span> <span class="s">REQUIRED</span> <span class="s">COMPONENTS</span> <span class="s">base64</span> <span class="s">base64url</span><span class="p">)</span>
@@ -201,10 +217,9 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="manual">
-<h3>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h2>Manual<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>Passing <code class="docutils literal notranslate"><span class="pre">-isystem/path/to/mgs/include</span></code> to your compiler invocation should be enough.</p>
-</div>
 </div>
 </div>
 
