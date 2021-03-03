@@ -74,13 +74,6 @@ Taking back the *foo* toy concept from above:
 
 .. code-block:: cpp
 
-   template <typename T>
-   auto add_numbers(T lhs, T rhs) {
-     return lhs + rhs;
-   }
-
-.. code-block:: cpp
-
    namespace mgs {
 
    template <typename T, typename U>
