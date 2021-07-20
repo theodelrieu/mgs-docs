@@ -3,6 +3,17 @@
 Changelog
 =========
 
+
+0.1.4
+-----
+
+- Fix: workaround a MSVC bug when using c++latest
+
+0.1.3
+-----
+
+- Tests: make tests pass with C++2a
+
 0.1.2
 -----
 
