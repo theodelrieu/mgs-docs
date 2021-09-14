@@ -3,6 +3,10 @@
 Changelog
 =========
 
+0.1.5
+-----
+
+- Fix: correctly define MGS_HAS_CXX macros
 
 0.1.4
 -----
