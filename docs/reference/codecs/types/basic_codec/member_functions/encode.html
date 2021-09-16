@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>codecs::basic_codec::encode &mdash; mgs 0.1.5 documentation</title>
+  <title>codecs::basic_codec::encode &mdash; mgs 0.2.0 documentation</title>
   
 
   
@@ -106,6 +106,8 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../../basic_codec.html#member-functions">Member functions</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">encode</a></li>
 <li class="toctree-l4"><a class="reference internal" href="decode.html">decode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lazy_encode.html">lazy_encode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lazy_decode.html">lazy_decode</a></li>
 <li class="toctree-l4"><a class="reference internal" href="make_encoder.html">make_encoder</a></li>
 <li class="toctree-l4"><a class="reference internal" href="make_decoder.html">make_decoder</a></li>
 </ul>
@@ -264,7 +266,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="codecs-basic-codec-encode">
-<h1>codecs::basic_codec::encode<a class="headerlink" href="#codecs-basic-codec-encode" title="Permalink to this headline">¶</a></h1>
+<span id="codecs-encode"></span><h1>codecs::basic_codec::encode<a class="headerlink" href="#codecs-basic-codec-encode" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// exposition only</span>
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="p">...</span><span class="n">Ts</span><span class="o">&gt;</span>
 <span class="k">using</span> <span class="n">Encoder</span> <span class="o">=</span> <span class="k">decltype</span><span class="p">(</span><span class="n">make_encoder</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">declval</span><span class="o">&lt;</span><span class="n">Ts</span><span class="o">&gt;</span><span class="p">()...));</span>

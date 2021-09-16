@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Basic usage &mdash; mgs 0.1.5 documentation</title>
+  <title>Basic usage &mdash; mgs 0.2.0 documentation</title>
   
 
   
@@ -92,6 +92,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#return-types">Return types</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#laziness">Laziness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#error-handling">Error handling</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#predicting-encoded-decoded-size">Predicting encoded/decoded size</a></li>
 </ul>
@@ -252,6 +253,28 @@ They can be one of the following:</p>
 <p>You can find the list of supported return types <a class="reference internal" href="advanced.html#supported-return-types"><span class="std std-ref">here</span></a>.</p>
 <p>If a type you wish to use is not supported by default, take a look <a class="reference internal" href="intermediate.html#adding-support-for-user-defined-types"><span class="std std-ref">here</span></a>.</p>
 </div>
+</div>
+</div>
+<div class="section" id="laziness">
+<h2>Laziness<a class="headerlink" href="#laziness" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">encode</span></code> and <code class="docutils literal notranslate"><span class="pre">decode</span></code> are overloaded functions, and thus cannot easily be used with STL algorithms (e.g. <code class="docutils literal notranslate"><span class="pre">std::transform</span></code>).</p>
+<p>You can use their lazy counterparts (i.e. <code class="docutils literal notranslate"><span class="pre">lazy_encode</span></code>/<code class="docutils literal notranslate"><span class="pre">lazy_decode</span></code>) which return a function object than can be called with the same arguments as <code class="docutils literal notranslate"><span class="pre">encode</span></code>/<code class="docutils literal notranslate"><span class="pre">decode</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;mgs/base64.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">{</span><span class="s">&quot;Hello&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="s">&quot;!&quot;</span><span class="p">};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">encoded_vec</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                 <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">encoded_vec</span><span class="p">),</span>
+                 <span class="n">base64</span><span class="o">::</span><span class="n">lazy_encode</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="error-handling">

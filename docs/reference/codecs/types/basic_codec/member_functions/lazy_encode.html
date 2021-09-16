@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>codecs::iterator_sentinel_source::max_remaining_size &mdash; mgs 0.2.0 documentation</title>
+  <title>codecs::basic_codec::lazy_encode &mdash; mgs 0.2.0 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
-    <link rel="next" title="codecs::iterator_sentinel_source::begin" href="begin.html" />
-    <link rel="prev" title="codecs::iterator_sentinel_source::read" href="read.html" /> 
+    <link rel="next" title="codecs::basic_codec::lazy_decode" href="lazy_decode.html" />
+    <link rel="prev" title="codecs::basic_codec::decode" href="decode.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -100,23 +100,23 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../base_n/types/decode_algorithm.html">base_n::decode_algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../base_n/types/padding_policy.html">base_n::padding_policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../base_n/concepts/encoding_traits.html">base_n::encoding_traits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basic_codec.html">codecs::basic_codec</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../basic_codec.html">codecs::basic_codec</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../basic_codec.html#template-parameters">Template parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basic_codec.html#member-types">Member types</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../basic_codec.html#member-functions">Member functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="encode.html">encode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="decode.html">decode</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">lazy_encode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lazy_decode.html">lazy_decode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="make_encoder.html">make_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="make_decoder.html">make_decoder</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../output_traits.html">codecs::output_traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basic_input_range.html">codecs::basic_input_range</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../iterator_sentinel_source.html">codecs::iterator_sentinel_source</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../../iterator_sentinel_source.html#template-parameters">Template parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../iterator_sentinel_source.html#member-types">Member types</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../../iterator_sentinel_source.html#member-functions">Member functions</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="constructor.html">(constructor)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="read.html">read</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">max_remaining_size</a></li>
-<li class="toctree-l4"><a class="reference internal" href="begin.html">begin</a></li>
-<li class="toctree-l4"><a class="reference internal" href="end.html">end</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../iterator_sentinel_source.html#non-member-functions">Non-member functions</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../../iterator_sentinel_source.html">codecs::iterator_sentinel_source</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/byte_type.html">codecs::byte_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/codec_output.html">codecs::codec_output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/codec_traits.html">codecs::codec_traits</a></li>
@@ -241,18 +241,18 @@
     
       <li><a href="../../../../reference.html">Reference</a> &raquo;</li>
     
-      <li><a href="../../iterator_sentinel_source.html">codecs::iterator_sentinel_source</a> &raquo;</li>
+      <li><a href="../../basic_codec.html">codecs::basic_codec</a> &raquo;</li>
     
   
   
-    <li>max_remaining_size</li>
+    <li>lazy_encode</li>
   
 
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../../../_sources/reference/codecs/types/iterator_sentinel_source/member_functions/max_remaining_size.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../../_sources/reference/codecs/types/basic_codec/member_functions/lazy_encode.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -265,36 +265,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="codecs-iterator-sentinel-source-max-remaining-size">
-<h1>codecs::iterator_sentinel_source::max_remaining_size<a class="headerlink" href="#codecs-iterator-sentinel-source-max-remaining-size" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">mgs</span><span class="o">::</span><span class="kt">ssize_t</span> <span class="n">max_remaining_size</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <div class="section" id="codecs-basic-codec-lazy-encode">
+<h1>codecs::basic_codec::lazy_encode<a class="headerlink" href="#codecs-basic-codec-lazy-encode" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span> <span class="o">=</span> <span class="n">traits</span><span class="o">::</span><span class="n">default_encoded_output</span><span class="o">&gt;</span>
+<span class="k">static</span> <span class="cm">/* unspecified */</span> <span class="n">lazy_encode</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Computes the maximum number of remaining bytes.</p>
+<p>Returns a function object that encodes input.</p>
 <hr class="docutils" />
-<div class="section" id="constraints">
-<h2>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h2>
-<p>This function is only defined if <strong>S</strong> models <a class="reference internal" href="../../../../meta/concepts/sized_sentinel_for.html#sized-sentinel-for"><span class="std std-ref">meta::sized_sentinel_for&lt;I&gt;</span></a>.</p>
-</div>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<p>None.</p>
-</div>
-<div class="section" id="return-value">
-<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
-<p>The maximum number of remaining bytes.</p>
-</div>
+<p>The returned function object has the same constraints as <a class="reference internal" href="encode.html#codecs-encode"><span class="std std-ref">codecs::basic_codec::encode</span></a>.</p>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/iterator_sentinel_source.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;mgs/base64.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/basic_codec.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mgs/codecs/iterator_sentinel_source.hpp&gt;</span><span class="cp"></span>
 
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="p">;</span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">mgs</span><span class="o">::</span><span class="n">codecs</span><span class="p">;</span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+<span class="k">using</span> <span class="n">codec</span> <span class="o">=</span> <span class="n">basic_codec</span><span class="o">&lt;</span><span class="n">base64</span><span class="o">::</span><span class="n">traits</span><span class="o">&gt;</span><span class="p">;</span>
 
-  <span class="k">auto</span> <span class="n">input_source</span> <span class="o">=</span> <span class="n">make_iterator_sentinel_source</span><span class="p">(</span><span class="n">hello</span><span class="p">);</span>
-  <span class="k">auto</span> <span class="n">size</span> <span class="o">=</span> <span class="n">input_source</span><span class="p">.</span><span class="n">max_remaining_size</span><span class="p">();</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">decoded</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">input_source</span> <span class="o">=</span> <span class="n">make_iterator_sentinel_source</span><span class="p">(</span><span class="n">decoded</span><span class="p">);</span>
+
+  <span class="n">codec</span><span class="o">::</span><span class="n">lazy_encode</span><span class="p">()(</span><span class="n">input_source</span><span class="p">);</span>
+  <span class="n">codec</span><span class="o">::</span><span class="n">lazy_encode</span><span class="p">()(</span><span class="n">decoded</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">decoded</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="n">codec</span><span class="o">::</span><span class="n">lazy_encode</span><span class="p">()(</span><span class="n">decoded</span><span class="p">);</span>
+  <span class="n">codec</span><span class="o">::</span><span class="n">lazy_encode</span><span class="p">()(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">decoded</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -309,10 +307,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="begin.html" class="btn btn-neutral float-right" title="codecs::iterator_sentinel_source::begin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lazy_decode.html" class="btn btn-neutral float-right" title="codecs::basic_codec::lazy_decode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="read.html" class="btn btn-neutral float-left" title="codecs::iterator_sentinel_source::read" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="decode.html" class="btn btn-neutral float-left" title="codecs::basic_codec::decode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
