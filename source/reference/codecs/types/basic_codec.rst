@@ -56,17 +56,21 @@ Member functions
 
    encode <basic_codec/member_functions/encode>
    decode <basic_codec/member_functions/decode>
+   lazy_encode <basic_codec/member_functions/lazy_encode>
+   lazy_decode <basic_codec/member_functions/lazy_decode>
    make_encoder <basic_codec/member_functions/make_encoder>
    make_decoder <basic_codec/member_functions/make_decoder>
 
 .. table::
    :align: left
 
-   ======================================================================== ==================
+   ======================================================================== ====================
    Name                                                                     Description
-   ======================================================================== ==================
+   ======================================================================== ====================
    :doc:`encode <basic_codec/member_functions/encode>` [static]             Encodes input
    :doc:`decode <basic_codec/member_functions/decode>` [static]             Decodes input
+   :doc:`lazy_encode <basic_codec/member_functions/lazy_encode>` [static]   Lazily encodes input
+   :doc:`lazy_decode <basic_codec/member_functions/lazy_decode>` [static]   Lazily decodes input
    :doc:`make_encoder <basic_codec/member_functions/make_encoder>` [static] Creates an encoder
    :doc:`make_decoder <basic_codec/member_functions/make_decoder>` [static] Creates a decoder
-   ======================================================================== ==================
+   ======================================================================== ====================

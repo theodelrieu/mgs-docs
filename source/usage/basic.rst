@@ -92,6 +92,31 @@ Currently all codecs use :cpp:`std::string <string/basic_string>` as the default
 
    If a type you wish to use is not supported by default, take a look :ref:`here <adding-support-for-user-defined-types>`.
 
+Laziness
+--------
+
+``encode`` and ``decode`` are overloaded functions, and thus cannot easily be used with STL algorithms (e.g. ``std::transform``).
+
+You can use their lazy counterparts (i.e. ``lazy_encode``/``lazy_decode``) which return a function object than can be called with the same arguments as ``encode``/``decode``.
+
+.. code-block:: cpp
+
+   #include <mgs/base64.hpp>
+
+   #include <algorithm>
+   #include <vector>
+
+   using namespace mgs;
+
+   int main() {
+     std::vector<std::string> vec{"Hello", "world", "!"};
+     std::vector<std::string> encoded_vec;
+
+     std::transform(vec.begin(), vec.end(),
+                    std::back_inserter(encoded_vec),
+                    base64::lazy_encode());
+   }
+
 Error handling
 --------------
 
