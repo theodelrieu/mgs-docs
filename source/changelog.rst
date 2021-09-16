@@ -3,6 +3,11 @@
 Changelog
 =========
 
+0.2.0
+-----
+
+- Feature: add lazy_encode/lazy_decode to every codec
+
 0.1.5
 -----
 

@@ -1,3 +1,5 @@
+.. _codecs-encode:
+
 ***************************
 codecs::basic_codec::encode
 ***************************
