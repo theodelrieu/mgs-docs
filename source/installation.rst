@@ -8,7 +8,7 @@ Conan
 
 .. code-block:: bash
 
-   $ conan install mgs/0.1.5@
+   $ conan install mgs/0.2.0@
 
 Manual
 ======
